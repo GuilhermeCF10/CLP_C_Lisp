@@ -1,0 +1,30 @@
+(defun soma-quadrado-recursivo (num)
+  (if (zerop num)
+      0
+      (let ((digito (mod num 10)))
+        (if (evenp digito)
+            (+ (* digito digito) (soma-quadrado-recursivo (floor num 10)))
+            (soma-quadrado-recursivo (floor num 10))))))
+
+(defun soma-quadrado-iterativo (num)
+  (let ((soma 0))
+    (loop while (> num 0)
+      do (let ((digito (mod num 10)))
+           (if (evenp digito)
+               (setf soma (+ soma (* digito digito))))
+           (setf num (floor num 10))))
+    soma))
+
+(defun main ()
+  (let ((num (read-line))
+        (soma-recursivo 0)
+        (soma-iterativo 0))
+    (while (or (< num 10) (> num 999999))
+      (format t "Entre com o número de até 6 dígitos: ")
+      (setf num (read-line)))
+    (setf soma-recursivo (soma-quadrado-recursivo num))
+    (setf soma-iterativo (soma-quadrado-iterativo num))
+    (format t "Soma dos quadrados dos dígitos pares (recursivo): ~d~%" soma-recursivo)
+    (format t "Soma dos quadrados dos dígitos pares (iterativo): ~d~%" soma-iterativo)))
+
+
